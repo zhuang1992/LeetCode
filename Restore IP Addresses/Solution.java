@@ -1,3 +1,5 @@
+//三层循环迭代
+//注意细节
 package workbench;
 
 import java.util.HashSet;
