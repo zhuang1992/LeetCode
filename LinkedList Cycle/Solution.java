@@ -1,3 +1,6 @@
+//追赶法，用了两个指针，没用多余的空间。
+//如果可以使用额外空间的话，可以把访问到的节点往哈希表里放。每访问一个节点都检查是否已经存在在hash
+//表中了。
 package workbench;
 /**
  * Definition for singly-linked list.
