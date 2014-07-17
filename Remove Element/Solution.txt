@@ -1,0 +1,25 @@
+public class Solution {
+    int findFromTail(int A[], int elem, int head, int tail){
+        for(int i = tail; i = head; i--){
+            if(A[i]!=elem){
+                int t=A[i];
+                A[i] = elem;
+                return t;
+            }
+        }
+        return -1;
+    }
+    public int removeElement(int[] A, int elem) {
+        int len = A.length;
+        int tail = len-1;
+        for(int i = 0; i = tail; i++){
+            if(A[i]==elem){
+                A[i] = findFromTail(A, elem, i,tail);
+                if(A[i]==-1)       //返回-1，说明从i到tail全都是elem。i往后全都是elem，可以直接返回				   //长度截掉它们
+                    return i;
+                tail --;
+            }
+        }
+        return tail+1;
+    }
+}
