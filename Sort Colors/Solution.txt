@@ -1,0 +1,25 @@
+public class Solution {
+    public void sortColors(int[] A) {
+        int red = -1;
+        int blue = A.length;
+        for(int i = 0; i < blue; i++){
+            if(A[i]==0){
+                red++;
+                if(i==red)  // no need to swap, just continue
+                    continue;
+                int temp = A[red];
+                A[red] = A[i];
+                A[i] = temp;
+                i--;
+            }else if(A[i]==2){
+                blue--;
+                if(i==blue) // no need to swap, just continue
+                    continue;
+                int temp = A[blue];
+                A[blue] = A[i];
+                A[i] = temp;
+                i--;
+            }
+        }
+    }
+}
