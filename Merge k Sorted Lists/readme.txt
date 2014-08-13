@@ -1,0 +1,5 @@
+可以用JAVA提供的PriorityQueue，注意comparator重写
+
+注意全为null的情况
+
+自己写个堆，也通过了。看来leetcode是支持内部类的。
