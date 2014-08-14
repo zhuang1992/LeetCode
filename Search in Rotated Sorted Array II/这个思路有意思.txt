@@ -1,0 +1,60 @@
+出现重复的时候，因为重复的次数我们无从得知，原数组旋转折叠的位置我们也无从得知，所以最后折叠后的状态我们也就无从得知，所以我们无法去按着Search in Rotated Sorted Array的判断标准去判断哪部分有序，设想一种情形1，1, 1，2，1,1,1，恰好左中右都是1,这时我们 ++左下标，--右下标，为什么这样我们不会将这个值跳过呢？ 就是说，凭什么我们说除却这两个位置，在两者之间就一定还存在这个值？当然能，因为我们进入的条件是左中右相等，所以我们可以把首尾的值都略过，进行下一次循环。
+
+class Solution {
+public:
+    bool search(int A[], int n, int target)
+    {
+        if(0 == n) return false;
+        int left = 0; 
+        int right = n - 1;
+        while(left <= right)
+        {
+            int midle = (left + right) >> 1;
+            if(A[midle] == target) return true;
+            if(A[left] == A[midle] && A[midle] == A[right])
+            {
+               ++left;
+               --right;
+            }
+            else if(A[left] <= A[midle])
+            {
+                if(A[left] <= target && target  < A[midle])
+                {
+                    right = midle - 1;
+                }
+                else
+                left = midle + 1;
+            }
+            else {
+                if(A[midle] < target && target <= A[right])
+                    left = midle + 1;
+                else
+                    right = midle - 1;
+            }
+        }
+        return false;
+    }
+};
+下面这个思想和上面一样。
+class Solution {
+public:
+    bool search(int A[], int n, int target) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        int left = 0;
+        int right = n-1;
+        while(left <= right)
+        {
+            int mid = left+(right-left)/2;
+            if(A[left] < target && target < A[mid]) right = mid-1;
+            else if(A[mid] < target && target < A[right]) left = mid+1;
+            else
+            {
+                if(A[left] != target) left++;
+                else return true;
+                if(A[right] != target) right--;
+                else return true;
+            }
+        }
+    }
+};
