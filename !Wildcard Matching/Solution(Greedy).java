@@ -1,4 +1,6 @@
 //直接DFS果然超时。小剪枝一下，有进步但还是TLE。
+//网上说这题可以贪心，试试
+//回头再试试DP吧
 package workbench;
 
 import java.util.Arrays;
@@ -10,40 +12,35 @@ import java.util.Scanner;
 import java.util.Stack;
 
 public class Solution {
-	boolean dfs(String s, int s1, String p, int p1){
-		if(s.length() == s1){
-			for(int i = p1; i < p.length(); i++){
-				if(p.charAt(i)!='*')
-					return false;
-			}
-			return true;
-		}
-		if(p.length() == p1){
-			if(s.length()==s1)
-				return true;
-			return false;
-		}
-			
-		boolean temp = false;
-		if(s.charAt(s1) == p.charAt(p1) || p.charAt(p1)=='?'){
-			 temp = dfs(s, s1+1, p, p1+1);
-			 if(temp == true)
-				 return true;
-		}
-		
-		if(p.charAt(p1)=='*'){
-			if(p1>0 && p.charAt(p1-1)=='*')  //连续的*可以忽略之，算剪枝吧
-				return false;
-			for(int i = s1-1; i < s.length(); i++){  //从s1-1开始，以便下面i+1是从s1开始，也就是*可以匹配空串
-				temp = dfs(s, i+1, p, p1+1);     //枚举一个'*'能覆盖多少s中的字符
-				if(temp==true)
-					return true;
-			}
-		}
-		return false;
-	}
     public boolean isMatch(String s, String p) {
-    	return dfs(s,0,p,0);
+    	int star=-1;
+    	int rs=-1;
+    	int ps = 0;
+    	int pp = 0;
+    	while(ps < s.length()){
+    		if(pp < p.length() && (s.charAt(ps) == p.charAt(pp) || p.charAt(pp)=='?')){
+    			ps++;
+    			pp++;
+    			continue;
+    		}
+    		if(pp < p.length() && p.charAt(pp)=='*'){
+    			star = pp;
+    			pp++;
+    			rs = ps;  // *先尝试匹配空串
+    			continue;
+    		}
+    		//如果运行到这，说明无法匹配下去了，需要回溯
+    		if(star != -1){		//如果前面出现过*，就还有救。这里体现了贪心思想，用最近的那个*来救就行。
+    								//DFS时也是先用最近的那个*来救，如果救不成，那就可以直接return false，不用再往前找了。嗯可以这样给dfs来剪个枝。
+    			pp = star + 1;  //reset the position of pp 类似回溯
+    			ps = rs + 1;  // *尝试多匹配一个字符
+    			rs ++;
+    			continue;
+    		}
+    		return false;
+    	}
+    	while(pp < p.length() && p.charAt(pp)=='*')pp++;
+    	return pp==p.length()?true:false;
     }
     public static void main(String[] args){
     	Solution test = new Solution();
