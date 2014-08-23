@@ -1,5 +1,7 @@
 //O(n)的时间复杂度
 //O(1)的空间复杂度
+//下面这种做法只需要从左到右扫一遍
+//其实来回扫两遍，每遍只处理非递减序列更容易理解。
 package workbench;
 
 import java.util.HashSet;
