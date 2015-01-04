@@ -23,7 +23,6 @@ public class Solution {
 		}
 		for(int i = 0 ; i < n; i++){
 			if(used[i]==false && check(cnt, i, n, singleAns)){
-				
 				used[i] = true;
 				singleAns.add(i);
 				dfs(n,cnt+1);
