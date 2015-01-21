@@ -41,3 +41,48 @@ public class Solution {
 		}
 	}
 }
+//Another recursion
+public class Solution {
+    List<List<Integer>> rst = new LinkedList<List<Integer>>();
+    
+    void dfs(int[] num, List<Integer> per, int pos){
+        if(per.size() == num.length){
+            rst.add(new LinkedList<Integer>(per));
+            return;
+        }
+        for(int i = 0; i <= per.size(); i++){
+            per.add(i, num[pos]);
+            dfs(num, per, pos+1);
+            per.remove(i);
+        }
+    }
+    
+    public List<List<Integer>> permute(int[] num) {
+        dfs(num, new LinkedList<Integer>(), 0);
+        return rst;
+    }
+}
+
+
+//Iteration
+public class Solution {
+    public List<List<Integer>> permute(int[] num) {
+        LinkedList<List<Integer>> rst = new LinkedList<List<Integer>>();
+        if(num == null || num.length == 0)
+            return rst;
+        rst.add(new LinkedList<Integer>());//rst=[[]];
+        for(int i = 0; i < num.length; i++){
+            int cnt = rst.size();
+            while(cnt-- > 0){
+                List<Integer> item = rst.getFirst();
+                for(int k = 0; k <= item.size(); k++){
+                    item.add(k,num[i]);
+                    rst.add(new LinkedList<Integer>(item));
+                    item.remove(k);
+                }
+                rst.removeFirst();
+            }
+        }
+        return rst;
+    }
+}
