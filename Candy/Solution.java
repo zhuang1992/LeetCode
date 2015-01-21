@@ -54,3 +54,33 @@ public class Solution {
 		System.out.print(test.candy(r));
 	}
 }
+//Two traverse. O(n) space. 
+public class Solution {
+	public static void main(String[] args) throws IOException {
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		int N;
+		String line = in.readLine();
+		N = Integer.parseInt(line);
+		int ratings[] = new int[N];
+		for (int i = 0; i < N; i++) {
+			ratings[i] = Integer.parseInt(in.readLine());
+		}
+		int[] count = new int[ratings.length];
+		Arrays.fill(count, 1);
+		int sum = 0;
+		for (int i = 1; i < ratings.length; i++) {
+			if (ratings[i] > ratings[i - 1]) {
+				count[i] = count[i - 1] + 1;
+			}
+		}
+
+		for (int i = ratings.length - 2; i >= 0; i--) {
+			if (ratings[i] > ratings[i+1] && count[i + 1] >= count[i]) { 
+				count[i] = count[i+1] + 1;
+			}
+			sum += count[i];
+		}
+		sum += count[ratings.length-1];
+		System.out.println(sum);
+	}
+}

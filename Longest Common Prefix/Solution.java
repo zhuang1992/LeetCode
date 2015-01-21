@@ -1,28 +1,32 @@
 package workbench;
 
 public class Solution {
-    public int lengthOfLongestSubstring(String s) {
-    	if(s.length()==0)return 0;
-    	char[] temp = s.toCharArray();
-    	int[] last = new int[256];
-    	for(int i = 0; i < 256; i++){
-    		last[i] = -1;
-    	}
-    	int len = 0;
-    	int start = 0;
-        for(int i = 0; i < s.length(); i++){
-        	if(last[temp[i]]>=start){
-        		len = len < i - start? i - start : len;
-        		start = last[temp[i]]+1;
-        	}
-        	last[temp[i]] = i;        	
+    public String longestCommonPrefix(String[] strs) {
+        if(strs.length==0)
+            return "";
+        int minLen = 999999999;
+        int minId = -1;
+        for(int i = 0; i < strs.length; i++){
+            if(strs[i].length()<minLen){
+                minLen = strs[i].length();
+                minId = i;
+            }
         }
-        len = len < last[temp[s.length()-1]] - start + 1 ? last[temp[s.length()-1]] - start + 1 : len;
-        return len;
-    }
-    public static void main(String[] args){
-    	Solution test = new Solution();
-    	String s = "abcauvwxyz";
-    	System.out.println(test.lengthOfLongestSubstring(s));
+        int maxL = strs[minId].length();
+        int tail = 0;
+        boolean isOver = false;
+        while(tail<maxL){
+            for(int i = 0; i < strs.length; i++){
+                if(strs[i].charAt(tail)!=strs[minId].charAt(tail)){
+                    isOver = true;
+                    break;
+                }
+            }
+            if(isOver)break;
+            tail++;
+        }
+        if(tail==maxL)
+            return strs[minId];
+        return strs[minId].substring(0,tail);
     }
 }
