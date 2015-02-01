@@ -1,9 +1,9 @@
-//直接DFS还是TLE了
-//还是要DP
-//啊我居然自己写出来这个DP了！！！
-//O(n^2)，关键要搞好填矩阵的顺序啊~~
-//dp[i][j]表示：从i往后，如果选择从j处劈开，能否恰好将s彻底拆分
-//显然填这个矩阵，要倒着来填。
+//脰卤陆脫DFS禄鹿脢脟TLE脕脣
+//禄鹿脢脟脪陋DP
+//掳隆脦脪戮脫脠禄脳脭录潞脨麓鲁枚脌麓脮芒赂枚DP脕脣拢隆拢隆拢隆
+//O(n^2)拢卢鹿脴录眉脪陋赂茫潞脙脤卯戮脴脮贸碌脛脣鲁脨貌掳隆~~
+//dp[i][j]卤铆脢戮拢潞麓脫i脥霉潞贸拢卢脠莽鹿没脩隆脭帽麓脫j麓娄脜眉驴陋拢卢脛脺路帽脟隆潞脙陆芦s鲁鹿碌脳虏冒路脰
+//脧脭脠禄脤卯脮芒赂枚戮脴脮贸拢卢脪陋碌鹿脳脜脌麓脤卯隆拢
 package workbench;
 
 import java.util.HashSet;
@@ -24,7 +24,7 @@ public class Solution {
 					dp[i][j] = false;
 				}					
 			}
-			for(int b = i; b < s.length()-1; b++){ 	//这个for只能在上面那个for完之后再开始，因为直到这时需要用到的dp信息才收集完成。说到底还是填表顺序决定的0。
+			for(int b = i; b < s.length()-1; b++){ 	//脮芒赂枚for脰禄脛脺脭脷脡脧脙忙脛脟赂枚for脥锚脰庐潞贸脭脵驴陋脢录拢卢脪貌脦陋脰卤碌陆脮芒脢卤脨猫脪陋脫脙碌陆碌脛dp脨脜脧垄虏脜脢脮录炉脥锚鲁脡隆拢脣碌碌陆碌脳禄鹿脢脟脤卯卤铆脣鲁脨貌戮枚露篓碌脛0隆拢
 				if(dp[i][b]==true && dp[b+1][s.length()-1]==true){
 					dp[i][s.length()-1] = true;
 					break;
@@ -40,5 +40,49 @@ public class Solution {
     	dict.add("leet");
     	dict.add("code");
     	System.out.print(test.wordBreak("leetscode", dict));
+    }
+}
+
+
+//
+/**
+ * Copyright: NineChapter
+ * - Algorithm Course, Mock Interview, Interview Questions
+ * - More details on: http://www.ninechapter.com/
+ */
+
+public class Solution {
+    private int getMaxLength(Set<String> dict) {
+        int maxLength = 0;
+        for (String word : dict) {
+            maxLength = Math.max(maxLength, word.length());
+        }
+        return maxLength;
+    }
+
+    public boolean wordBreak(String s, Set<String> dict) {
+        if (s == null || s.length() == 0) {
+            return false;
+        }
+
+        int maxLength = getMaxLength(dict);
+        boolean[] canSegment = new boolean[s.length() + 1];
+
+        canSegment[0] = true;
+        for (int i = 1; i <= s.length(); i++) {
+            canSegment[i] = false;
+            for (int j = 1; j <= maxLength && j <= i; j++) {
+                if (!canSegment[i - j]) {
+                    continue;
+                }
+                String word = s.substring(i - j, i);
+                if (dict.contains(word)) {
+                    canSegment[i] = true;
+                    break;
+                }
+            }
+        }
+
+        return canSegment[s.length()];
     }
 }

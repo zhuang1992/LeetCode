@@ -35,3 +35,34 @@ public class Solution {
     	
     }
 }
+
+//Tried Again
+public class Solution {
+    public List<Integer> getRow(int rowIndex) {
+        List<Integer>cur = new LinkedList<Integer>();
+        for(int i = 0; i < 3; i++){
+        	cur.add(0);
+        }
+        cur.set(1, 1);
+        List<Integer> nextLv = new LinkedList<Integer>();
+        nextLv.add(0);
+    	for(int i = 0; i < rowIndex; i++){
+        	for(int j = 0; j <= i+1; j++){
+        		nextLv.add(cur.get(j)+cur.get(j+1));
+        	}
+        	nextLv.add(0);
+        	cur = nextLv;
+        	nextLv = new LinkedList<Integer>();
+        	nextLv.add(0);
+        }
+    	cur.remove(0);
+    	cur.remove(cur.size()-1);
+    	return cur;
+    }
+    public static void main(String[] args){
+    	Solution test = new Solution();
+    	List<Integer> r = test.getRow(3);
+    	for(int i : r)
+    		System.out.print(i);
+    }
+}

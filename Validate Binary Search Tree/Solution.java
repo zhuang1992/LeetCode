@@ -36,3 +36,21 @@ public class Solution {
         System.out.println(test.isValidBST(r));
     }
 }
+
+//Recursive
+
+public class Solution{
+	boolean _isBST(TreeNode r,long lmax, long rmin){
+		if(r == null)
+			return true;
+		if(r.val < lmax || r.val > rmin)
+			return false;
+		return _isBST(r.left, lmax, r.val) || _isBST(r.right, r.val, rmin);
+	}
+	boolean isValidBST(TreeNode r){
+		return _isBST(r, Long.MIN_VALUE, Long.MAX_VALUE);
+	}
+	public static void main(String[] args){
+		
+	}
+}

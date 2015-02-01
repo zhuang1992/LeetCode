@@ -1,6 +1,26 @@
-//主要是原地变换比较麻烦
-package workbench;
+//Using precursor and preorder traverse
+public class Solution {
+    private TreeNode lastNode = null;
 
+    public void flatten(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+
+        if (lastNode != null) {
+            lastNode.left = null;
+            lastNode.right = root;
+        }
+
+        lastNode = root;
+        TreeNode right = root.right;
+        flatten(root.left);
+        flatten(right);
+    }
+}
+
+
+// - -
 public class Solution {
     TreeNode moveLeftToRight(TreeNode r){
     	if(r==null)

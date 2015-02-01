@@ -1,5 +1,5 @@
-//¸´ÓÃÁËÖ®Ç°reverse linked listÖĞµÄreverseAllº¯Êı£¬ÕæºÃÓÃ°¡¡£
-//reverseAllµÄ×÷ÓÃÊÇ·­×ª´Óh¿ªÊ¼£¬µ½tailÕâÑùÒ»ÌõÁ´±í(²»°üÀ¨tail)¡£
+//Â¸Â´Ã“ÃƒÃÃ‹Ã–Â®Ã‡Â°reverse linked listÃ–ÃÂµÃ„reverseAllÂºÂ¯ÃŠÃ½Â£Â¬Ã•Ã¦ÂºÃƒÃ“ÃƒÂ°Â¡Â¡Â£
+//reverseAllÂµÃ„Ã—Ã·Ã“ÃƒÃŠÃ‡Â·Â­Ã—ÂªÂ´Ã“hÂ¿ÂªÃŠÂ¼Â£Â¬ÂµÂ½tailÃ•Ã¢Ã‘Ã¹Ã’Â»ÃŒÃµÃÂ´Â±Ã­(Â²Â»Â°Ã¼Ã€Â¨tail)Â¡Â£
 package workbench;
 
 import java.util.Arrays;
@@ -16,8 +16,8 @@ import java.util.Stack;
 public class Solution {
 	ListNode newTail;
     ListNode reverseAll(ListNode h, ListNode tail){ 
-		//×¢ÒâwhileÑ­»·Ò»´ÎÉæ¼°µ½µÄ½Úµã£¬»áÓĞ¶à¸ö(ÏëÏó³ÉÒ»¸öÑ­»·½Ú)¡£Èç¹ûÕû¸öÁ´±í³¤¶È¶¼²»¹»Ò»¸öÑ­»·½Ú£¬ÄÇÃ´ÔÚwhileÇ°ÃæÓ¦¸ÃÓĞÔ¤ÅĞ£¬Ö±½Óreturn
-		//Õâ¸öÂß¼­±È½ÏÖØÒªÓĞÓÃ
+		//Ã—Â¢Ã’Ã¢whileÃ‘Â­Â»Â·Ã’Â»Â´ÃÃ‰Ã¦Â¼Â°ÂµÂ½ÂµÃ„Â½ÃšÂµÃ£Â£Â¬Â»Ã¡Ã“ÃÂ¶Ã Â¸Ã¶(ÃÃ«ÃÃ³Â³Ã‰Ã’Â»Â¸Ã¶Ã‘Â­Â»Â·Â½Ãš)Â¡Â£ÃˆÃ§Â¹Ã»Ã•Ã»Â¸Ã¶ÃÂ´Â±Ã­Â³Â¤Â¶ÃˆÂ¶Â¼Â²Â»Â¹Â»Ã’Â»Â¸Ã¶Ã‘Â­Â»Â·Â½ÃšÂ£Â¬Ã„Ã‡ÃƒÂ´Ã”ÃšwhileÃ‡Â°ÃƒÃ¦Ã“Â¦Â¸ÃƒÃ“ÃÃ”Â¤Ã…ÃÂ£Â¬Ã–Â±Â½Ã“return
+		//Ã•Ã¢Â¸Ã¶Ã‚ÃŸÂ¼Â­Â±ÃˆÂ½ÃÃ–Ã˜Ã’ÂªÃ“ÃÃ“Ãƒ
 		if(h==null || h.next==null)
 			return h;
 		newTail = h;
@@ -25,7 +25,7 @@ public class Solution {
 		h = h.next;
 		newHead.next = null;
 		ListNode nxt;
-		while(h!=tail){ //·­×ªµ½tailÎªÖ¹
+		while(h!=tail){ //Â·Â­Ã—ÂªÂµÂ½tailÃÂªÃ–Â¹
 			nxt = h.next;
 			h.next = newHead;
 			newHead = h;
@@ -73,5 +73,42 @@ public class Solution {
     		System.out.println(rst.val);
     		rst = rst.next;
     	}
+    }
+}
+
+//ç®€æ´ç‚¹çš„
+ public ListNode reverseKGroup(ListNode head, int k) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(k == 0 || k == 1) return head;
+        ListNode cur = head;
+        int length = 0;
+        while (cur != null){
+            cur = cur.next;
+            length++;
+        }
+        int multi = length / k;
+        if(multi == 0) return head;
+        ListNode preTail = null, curHead = null, curTail = null;
+        ListNode preNode = null, nextNode = null;
+        cur = head;
+        for(int j = 0; j < multi; j++) {
+            preNode = null;
+            for(int i = 0; i < k; i++) {
+                if(cur != null) {
+                    nextNode = cur.next;
+                    cur.next = preNode;
+                    preNode = cur;
+                }
+                if(i == 0) curTail = cur;
+                if(i == (k - 1)) curHead = cur;
+                cur = nextNode;
+            }
+            if(preTail == null) head = curHead;
+            else preTail.next = curHead;
+            preTail = curTail;
+        }
+        curTail.next = cur;
+        return head;
     }
 }
